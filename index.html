@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#f8f9fa">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rewards</title>
+    <!-- Critical inline styles to avoid flash of unstyled background on reload -->
+    <style>html,body{background:#f8f9fa;color:#213547;min-height:100vh;margin:0;box-sizing:border-box;color-scheme:light;font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;}</style>
+  </head>
+  <body>
+    <div id="root-placeholder" aria-hidden="true">
+      <div style="display:flex; height:100vh; background:#f8f9fa;">
+        <aside style="width:320px; background:#fff; padding:28px; box-shadow: 0 6px 18px rgba(11,15,25,0.06);">
+          <div style="height:40px; background:linear-gradient(90deg,#f3e8ff,#fff); border-radius:8px; width:140px;"></div>
+          <div style="height:12px; width:180px; background:#f3e8ff; border-radius:6px; margin-top:18px"></div>
+          <div style="flex:1"></div>
+          <div style="height:48px; width:48px; border-radius:24px; background:#f3e8ff"></div>
+        </aside>
+        <main style="flex:1; padding:28px;">
+          <div style="height:44px; width:320px; background:#fff; border-radius:10px; margin-bottom:20px"></div>
+          <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:20px;">
+            <div style="height:220px; background:#fff; border-radius:12px"></div>
+            <div style="height:220px; background:#fff; border-radius:12px"></div>
+            <div style="height:220px; background:#fff; border-radius:12px"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script>
+      /* minimal inline styles for the placeholder and transition */
+      const s = document.createElement('style')
+      s.textContent = `#root-placeholder{transition:opacity 320ms ease, visibility 320ms ease} #root-placeholder.fade-out{opacity:0; visibility:hidden}`
+      document.head.appendChild(s)
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

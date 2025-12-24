@@ -1,0 +1,262 @@
+.rewards-hub { padding: 1.25rem; }
+.hub-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem }
+.hub-header h1{ margin:0 }
+.hub-header .sub{ color: #6b7280; margin-top:0.25rem }
+.tabs .tab{ background:transparent; border:none; padding:0.5rem 1rem; cursor:pointer; color:#6b21a8 }
+.tabs .tab.active{ border-bottom:3px solid #a78bfa; font-weight:600 }
+
+/* Flex layout: responsive 3/2/1 card rows (no fixed containers) */
+/* cards-row-wrapper removed — CardsGrid is placed directly inside .your-journey */
+.cards-grid { display:flex; gap:1.25rem; margin-top:1rem; justify-content:flex-start; align-items:flex-start; flex-wrap:wrap; width:100%; padding:0; overflow-x:visible }
+/* 3 columns on desktop, 2 on tablet, 1 on mobile */
+.interactive-card { display:block; flex: 1 1 calc((100% / 3) - 0.833rem); min-width:220px; max-width:none }
+
+/* Keep featured card same flow but allow it to be a little wider if content requires */
+.interactive-card.right-col { flex: 1 1 calc((100% / 3) - 0.833rem); min-width:300px }
+
+.card { background: #fff; border-radius:14px; padding:1rem; transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms, filter 180ms; transform-origin:center; will-change:transform; display:flex; flex-direction:column; justify-content:space-between; min-height: 280px }
+
+/* Responsive breakpoints */
+@media (max-width: 1100px) {
+  .interactive-card { flex: 1 1 calc(50% - 0.625rem); }
+}
+@media (max-width: 720px) {
+  .interactive-card { flex: 1 1 100%; }
+}
+
+
+
+/* Use CSS vars set by InteractiveCard for subtle cursor movement */
+.interactive-card { --mx: 0; --my: 0; --scale: 1 }
+.card { transform: perspective(800px) rotateX(calc(var(--my) * 6deg)) rotateY(calc(var(--mx) * -6deg)) translateY(calc((var(--my) * -8px))) scale(var(--scale)); box-shadow: 0 8px 22px rgba(11,15,25,0.06) }
+.interactive-card:focus-within .card, .interactive-card:hover .card { box-shadow: 0 20px 40px rgba(11,15,25,0.10); }
+
+/* Make featured card taller and styled */
+.interactive-card.right-col .card{ min-height:360px }
+.interactive-card.right-col .card-header{ background: linear-gradient(90deg,#7c3aed,#60a5fa); color: white }
+
+/* header and tabs layout */
+.hub-header{ display:block; margin-bottom: 6px }
+.hub-title{ margin: 0 0 6px 0 }
+.hub-title h1{ font-size:18px; margin:0; font-weight:700; color:#111827 }
+.hub-title .sub{ margin:4px 0 8px; color:#6b7280; font-size:13px }
+.hub-tabs{ margin-top:4px }
+.tabs{ display:inline-flex; gap:8px }
+.tabs .tab{ padding:6px 10px; border-radius:8px; font-size:13px }
+
+/* Your Rewards Journey heading smaller and left-aligned */
+.your-journey h2{ font-size:16px; margin: 12px 0; font-weight:700; color:#111827; padding-left:4px }
+
+
+/* thumbnail slight zoom on hover */
+.offer-thumb{ transition: transform 350ms cubic-bezier(.2,.9,.3,1) }
+.interactive-card:hover .offer-thumb{ transform: scale(1.04) }
+
+/* CTA reveal */
+@media (min-width: 720px) {
+  .card .offer-actions { transform: translateY(8px); opacity: 0; transition: transform 220ms, opacity 220ms; pointer-events: none; }
+  .interactive-card:hover .offer-actions, .interactive-card:focus-within .offer-actions { transform: translateY(0); opacity: 1; pointer-events: auto; }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .card, .offer-actions, .offer-thumb { transition: none !important; transform: none !important }
+}
+
+@media (max-width:1000px){
+  .cards-grid{ flex-wrap:wrap; justify-content:center }
+  .interactive-card{ flex: 0 1 45% }
+}
+
+@media (max-width:720px){
+  .interactive-card{ flex: 1 1 100% }
+  .cards-grid{ gap:1rem }
+}
+.points-card .points-number { font-size:2.5rem; font-weight:800; color:#6b21a8 }
+.card-header{ background: linear-gradient(90deg,#f8f5ff,#fff); padding:0.75rem 1rem; border-radius:8px; display:flex; align-items:center; gap:8px }
+.card-header h3{ margin:0; font-size:1rem; font-weight:700 }
+.card-header .badge{ width:36px; height:36px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; background:#f3e8ff }
+
+/* thumbnail slight zoom on hover */
+.offer-thumb{ transition: transform 350ms cubic-bezier(.2,.9,.3,1) }
+.interactive-card:hover .offer-thumb{ transform: scale(1.04) }
+
+/* CTA reveal */
+@media (min-width: 720px) {
+  .card .offer-actions { transform: translateY(8px); opacity: 0; transition: transform 220ms, opacity 220ms; pointer-events: none; }
+  .interactive-card:hover .offer-actions, .interactive-card:focus-within .offer-actions { transform: translateY(0); opacity: 1; pointer-events: auto; }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .card, .offer-actions, .offer-thumb { transition: none !important; transform: none !important }
+}
+
+@media (max-width:800px){
+  .interactive-card{ flex: 1 1 100% }
+  .cards-grid{ gap:1rem }
+}
+.progress-bar{ height:8px; background:#f3f4f6; border-radius:999px; margin-top:0.75rem; overflow:hidden }
+.progress{ height:100%; background:linear-gradient(90deg,#7c3aed,#a78bfa); border-radius:999px }
+.progress-meta{ color:#6b7280; font-size:0.85rem; margin-top:0.5rem }
+.note{ font-size:0.85rem; color:#9ca3af; margin-top:0.5rem }
+
+/* Redeem page styles */
+.redeem-page{ padding: 10px }
+.redeem-top-row{ display:flex; align-items:center; gap:12px }
+.back-link{ background:transparent; border:none; color:#6b21a8; cursor:pointer }
+.redeem-title h1{ margin:0; font-size:18px }
+.redeem-header{ margin-bottom:12px }
+.redeem-tabs .tabs{ display:flex; gap:10px; margin-top:10px }
+.redeem-tabs .tab{ background:transparent; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; color:#6b21a8; font-weight:600 }
+.redeem-tabs .tab .count{ margin-left:8px; background:#f3e8ff; color:#6b21a8; padding:2px 6px; border-radius:999px; font-weight:700 }
+.redeem-tabs .tab.active{ border-bottom:3px solid #a78bfa }
+
+.redeem-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin-top:18px }
+.redeem-card { display:flex; flex-direction:column; justify-content:space-between; min-height:240px }
+.redeem-card .card-image{ height:120px; display:flex; align-items:center; justify-content:center; font-size:26px; background:linear-gradient(90deg,#fff5ff,#fbfbff); border-radius:8px }
+.redeem-card .card-body{ padding:12px }
+.redeem-card .offer-title{ font-weight:700; font-size:1rem; margin-bottom:6px }
+.redeem-card .offer-desc{ color:#6b7280; font-size:0.92rem; margin-bottom:10px }
+.redeem-card .offer-footer{ display:flex; justify-content:space-between; align-items:center; gap:12px }
+.redeem-card .cost{ color:#6b21a8; font-weight:700 }
+.redeem-card.coming{ opacity:0.7 }
+
+.redeem-card .btn[disabled]{ opacity:0.6; cursor:not-allowed }
+
+@media (max-width:720px){
+  .redeem-grid{ grid-template-columns: 1fr }
+}
+
+.streak-card .streak-days{ font-size:1.75rem; font-weight:700; color:#7c3aed }
+.week-indicator{ display:flex; gap:0.5rem; margin:0.5rem 0 }
+.week-indicator .day{ width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:999px; background:#f3f4f6 }
+.week-indicator .day.active{ background:#c7b3ff; color:#4c1d95 }
+
+.offer-card{ display:flex; flex-direction:column; height:100% }
+.card-image{ height:140px; background:linear-gradient(90deg,#f3e8ff,#fef2f2); display:flex; align-items:center; justify-content:center; border-radius:8px; overflow:hidden }
+.image-placeholder{ color:#7c3aed }
+.offer-thumb{ width:100%; height:100%; object-fit:cover; display:block }
+.offer-title{ margin-top:0.75rem; font-weight:600 }
+.offer-actions{ display:flex; gap:0.5rem; margin-top:0.75rem }
+.claim-message{ margin-top:0.5rem; color:#10b981; font-weight:600 }
+.btn[disabled]{ opacity:0.6; cursor:not-allowed }
+
+.earn-more{ margin-top:1.5rem }
+/* Earn-more cards now match the main card pattern (rectangular) */
+.earn-list{ display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1rem }
+.earn-card{ min-height:200px; padding:1rem; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between }
+.earn-card:focus, .earn-card:hover{ transform: translateY(-6px); box-shadow: 0 20px 40px rgba(11,15,25,0.12) }
+.earn-card .card-header{ display:flex; align-items:center; gap:12px }
+.earn-card .badge{ width:56px; height:56px; border-radius:12px; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(90deg,#fff,#fbf8ff); box-shadow: 0 6px 18px rgba(124,58,237,0.06) }
+.earn-card .badge svg{ width:28px; height:28px }
+
+.earn-top{ display:flex; justify-content:center; align-items:center; margin-top:8px }
+.earn-icon{ width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#faf5ff,#f4f7ff); box-shadow: inset 0 -6px 12px rgba(124,58,237,0.04) }
+.earn-icon svg{ width:28px; height:28px; transition: transform 240ms cubic-bezier(.2,.9,.3,1) }
+.earn-card:hover .earn-icon svg, .earn-card:focus .earn-icon svg{ transform: scale(1.08) }
+
+
+.earn-title{ font-weight:800; font-size:1.02rem; color:#111827; margin:0 0 20px 0; padding-bottom:10px; border-bottom:3px solid rgba(124,58,237,0.12) }
+.earn-desc{ margin-top:22px; color:#6b7280; font-size:0.95rem; line-height:1.36; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden }
+
+.earn-footer{ display:flex; justify-content:center; align-items:center; margin-top:12px }
+
+.btn.primary{ background: linear-gradient(90deg,#7c3aed,#60a5fa); color: #fff }
+
+@media (max-width:720px){
+  .earn-list{ grid-template-columns: 1fr }
+  .earn-card{ height:auto; aspect-ratio: 3/1; flex-direction:row; gap:12px; align-items:center }
+  .earn-top{ align-items:center }
+  .earn-icon{ margin-right:12px }
+  .earn-footer{ margin-top:0 }
+}
+
+@media (max-width:720px){
+  .earn-list{ grid-template-columns: 1fr }
+  .earn-card{ aspect-ratio: 3/1; flex-direction:row; gap:12px; align-items:center }
+  .earn-icon{ margin-bottom:0; width:48px; height:48px }
+  .earn-body{ flex:1 }
+  .earn-footer{ margin-top:0; justify-content:flex-end }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .earn-card, .earn-icon svg{ transition: none !important; transform: none !important }
+}
+
+/* Referral section */
+.refer-section{ margin-top:1.5rem; background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 30px rgba(16,24,40,0.04) }
+.refer-header{ display:flex; align-items:center; gap:12px; margin-bottom:8px }
+.refer-bar{ width:4px; height:22px; background:#7c3aed; border-radius:4px }
+.refer-header h3{ margin:0; font-size:18px }
+.refer-error{ color:#dc2626; margin:8px 0 }
+.refer-loading{ color:#6b7280; margin:8px 0 }
+
+.refer-banner{ display:flex; align-items:center; gap:12px; background:linear-gradient(90deg,#eef2ff,#fbfbff); padding:12px 16px; border-radius:10px; margin-top:12px }
+.refer-banner-left{ font-size:22px }
+.refer-banner-title{ font-weight:700; font-size:16px }
+.refer-banner-sub{ color:#6b7280; font-size:13px }
+
+.refer-stats.centered{ display:flex; gap:40px; justify-content:center; align-items:center; margin-top:22px }
+.stat-number.big{ font-size:22px; font-weight:800; color:#7c3aed }
+.stat-label{ color:#6b7280; margin-top:8px }
+
+.referral-card.pink{ margin-top:18px; background:#fff5fb; padding:14px; border-radius:10px; display:flex; gap:10px; align-items:center }
+.ref-input{ flex:1; padding:10px 14px; border-radius:8px; border:1px solid rgba(124,58,237,0.12); background:transparent }
+.copy-btn.purple{ padding:10px 12px; border-radius:8px; background:linear-gradient(90deg,#fff,#fbf8ff); border:1px solid #7c3aed; color:#7c3aed }
+.copy-btn.purple[disabled]{ opacity:0.6; cursor:not-allowed }
+
+.share-row.icons{ display:flex; gap:12px; justify-content:center; margin-top:18px }
+.social{ width:36px; height:36px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; border:none; cursor:pointer; transition: transform 160ms cubic-bezier(.2,.9,.3,1), box-shadow 160ms }
+.social:hover, .social:focus{ transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 20px rgba(11,15,25,0.12) }
+.social:active{ transform: scale(0.98) }
+
+.social.fb{ background:#1877F2; color:white }
+.social.x{ background:#000; color:white }
+.social.in{ background:#0A66C2; color:white }
+.social.wa{ background:#25D366; color:white }
+
+@media (max-width:720px){
+  .refer-stats.centered{ gap:20px }
+  .refer-banner{ flex-direction:row }
+}
+
+.btn{ padding:0.5rem 0.9rem; border-radius:999px; border:none; cursor:pointer }
+.btn.primary{ background: #7c3aed; color:white }
+.btn.outline{ background:transparent; border:1px solid #e5e7eb }
+.btn.small{ font-size:0.85rem; padding:0.3rem 0.6rem }
+
+/* Redeem page card visuals: pale rounded cards and disabled gradient buttons */
+.redeem-card { display:flex; flex-direction:column; justify-content:space-between; min-height:240px; border: 1px solid rgba(167,139,250,0.15); border-radius:12px; background: #fff; box-shadow: 0 6px 18px rgba(124,58,237,0.04); }
+.redeem-card .card-image{ height:120px; display:flex; align-items:center; justify-content:center; font-size:26px; background:linear-gradient(90deg,#fff5ff,#fbfbff); border-radius:10px; margin:12px }
+.redeem-card .card-body{ padding:12px }
+.redeem-card .offer-title{ font-weight:700; font-size:1rem; margin-bottom:6px }
+.redeem-card .offer-desc{ color:#6b7280; font-size:0.92rem; margin-bottom:10px }
+.redeem-card .offer-footer{ display:flex; justify-content:space-between; align-items:center; gap:12px }
+.redeem-card .cost{ color:#6b21a8; font-weight:700 }
+.redeem-card.coming{ opacity:0.85 }
+
+/* Locked button style: pale purple rounded disabled gradient */
+.redeem-card .btn.locked{ background: linear-gradient(180deg,#EEF2FF,#F8F6FF); border: 1px solid rgba(167,139,250,0.12); color: #8B5CF6; padding:8px 12px; border-radius:999px }
+.redeem-card .btn.locked[disabled]{ opacity:1; cursor:not-allowed }
+
+.redeem-card .btn[disabled]{ opacity:0.9; cursor:not-allowed }
+
+/* CTA micro-interactions (desktop only) */
+@media (min-width: 720px) {
+  .card .offer-actions { transform: translateY(8px); opacity: 0; transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms; pointer-events: none; }
+  .card:hover .offer-actions, .interactive-card:focus-within .offer-actions { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+  .card .btn { transform: translateY(6px); transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms; }
+  .card:hover .btn { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card .offer-actions, .card .btn, .interactive-card { transition: none !important; transform: none !important; }
+}
+
+@media (max-width:800px){
+  .cards-grid{ grid-template-columns: 1fr; }
+  .earn-list{ grid-template-columns: 1fr }
+  .refer-stats{ flex-direction:column }
+}

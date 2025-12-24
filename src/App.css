@@ -1,0 +1,266 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app.auth {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app.rewards {
+  background: #f8f9fa;
+  min-height: 100vh;
+  display: block;
+}
+
+/* Layout: allow app layout and main content to stretch full width */
+.app-layout { display:flex; gap:20px; align-items:flex-start; padding:24px; width:100%; max-width:none; box-sizing:border-box }
+.main-content { flex:1 }
+
+.rewards-page { width:100%; margin:0; padding:20px; background: #f8f9fa; min-height:100vh; box-sizing:border-box }
+
+.auth-container {
+  
+  width: 100%;
+  padding: 80px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  
+  
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-container input {
+  padding: 15px 20px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  background: #f8f9fa;
+}
+
+.auth-container input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+}
+
+.auth-container button {
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.auth-container button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.auth-container > button:last-child {
+  margin-top: 20px;
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  font-weight: 500;
+}
+
+.auth-container > button:last-child:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Page and header styles adjusted for full-width layout */
+.rewards-page { width:100%; margin:0; padding:24px; background: transparent; min-height: calc(100vh - 48px); box-sizing:border-box }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+}
+
+header h1 {
+  color: #333;
+  font-size: 28px;
+  margin: 0;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-info p {
+  margin: 5px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.user-info button {
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.user-info button:hover {
+  background: #c0392b;
+}
+
+/* Removed global section boxes so everything flows edge-to-edge */
+
+/* Keep h2 sensible but not boxed */
+h2 { margin-top: 0; color: #333; font-size: 20px; margin-bottom: 8px; }
+
+.reward-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.reward-item {
+  border: 1px solid #f1eff8;
+  padding: 20px;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  background: #ffffff;
+}
+
+.reward-item:hover {
+  box-shadow: 0 6px 18px rgba(11,15,25,0.06);
+  transform: translateY(-3px);
+}
+
+.reward-item h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.reward-item p {
+  color: #666;
+  margin: 10px 0;
+}
+
+.reward-item p:last-of-type {
+  font-weight: bold;
+  color: #7c3aed;
+}
+
+.reward-item button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s ease;
+}
+
+.reward-item button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #218838 0%, #1aa085 100%);
+}
+
+.reward-item button:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
+
+.redemption-history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.redemption-history li {
+  padding: 12px;
+  border-bottom: 1px solid #f1eff8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.redemption-history li:last-child {
+  border-bottom: none;
+}
+
+.redemption-history li span:first-child {
+  font-weight: 500;
+  color: #333;
+}
+
+.redemption-history li span:last-child {
+  color: #666;
+  font-size: 14px;
+}
+
+/* App layout & Sidebar: sidebar reduced so main content dominates */
+.app-layout { display:flex; gap:18px; align-items:flex-start; padding:12px 18px; width:100%; max-width:none; margin:0; min-height:100vh; box-sizing:border-box }
+.sidebar { width:200px; min-width:160px; background:white; border-radius:12px; padding:16px; box-shadow: 0 6px 18px rgba(11,15,25,0.06); height:auto; position:sticky; top:16px; overflow:auto }
+.brand { font-weight:800; color:#7c3aed; margin-bottom:12px; font-size:16px }
+.nav-item{ padding:10px 10px; border-radius:8px; color:#111827; cursor:pointer; display:flex; align-items:center; gap:10px }
+.nav-item.active{ background:#f3e8ff; color:#6b21a8; font-weight:700 }
+.user-summary{ margin-top:16px; color:#6b7280; font-size:14px }
+/* Make main content fluid and edge-to-edge for responsive layouts */
+.main-content { flex:1; min-height:100vh; overflow:auto; padding:12px; box-sizing:border-box; display:block; justify-content:flex-start }
+
+/* No centered container — full width */
+.rewards-page { width:100%; max-width:none; margin:0; padding:0; box-sizing:border-box }
+
+@media (max-width:900px){
+  .app-layout{ flex-direction:column; height:auto }
+  .sidebar{ width:100%; display:flex; gap:12px; overflow:auto; position:relative; height:auto; padding:12px }
+  .main-content{ padding:12px }
+  .rewards-page { padding: 0 }
+}
