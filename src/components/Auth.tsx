@@ -42,8 +42,11 @@ const Auth: React.FC = () => {
 
   const canSubmit = !emailError && !pwdError && !!email && !!password
 
-  const [confirmationSent, setConfirmationSent] = useState(false)
-  const skipConfirm = import.meta.env.VITE_AUTH_SKIP_CONFIRM === 'true'
+  // Confirmation flow removed: signup will immediately attempt to sign in the user.
+  // (Server-side email confirmation is not enforced by the client.)
+  // NOTE: If your auth provider strictly requires email confirmation, sign-in may still fail.
+  // In that case adjust your provider settings or add a server-side auto-confirm hook.
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -55,19 +58,15 @@ const Auth: React.FC = () => {
     setLoading(true)
     try {
       if (isSignUp) {
+        // After signup, immediately attempt to sign in.
         await signUp(email, password)
-        if (skipConfirm) {
-          // trial mode: immediately sign the user in without waiting for email confirmation
-          try {
-            await signIn(email, password)
-          } catch (e) {
-            // log and fall back to confirmation flow if sign-in failed
-            console.warn('auto sign-in after signup failed', e)
-            setConfirmationSent(true)
-          }
-        } else {
-          setConfirmationSent(true)
-          // start polling for confirmation (handled in useEffect below)
+        try {
+          await signIn(email, password)
+        } catch (e) {
+          // Sign-in after signup failed (could be due to server-side confirmation rules).
+          // Surface an error but do not enter a confirmation UI — user can try signing in manually.
+          console.warn('Sign-in after signup failed', e)
+          setError('Sign-up succeeded but automatic sign-in failed. Please try signing in or check auth settings.')
         }
       } else {
         await signIn(email, password)
@@ -80,139 +79,9 @@ const Auth: React.FC = () => {
   }
 
   // When confirmation is sent, show a special view until the user confirms via email
-  React.useEffect(() => {
-    if (!confirmationSent) return
-    let stopped = false
-    let attempts = 0
 
-    // Realtime subscription to user_events table (fired by our webhook)
-    const channel = supabase
-      .channel('user-events')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'user_events' }, (payload) => {
-        try {
-          const newRow = payload?.new
-          if (!newRow) return
-          const p = newRow.payload || {}
-          if (p.email === email && newRow.type === 'email_confirmed') {
-            // auto sign-in if possible
-            (async () => {
-              try {
-                await signIn(email, password)
-                stopped = true
-                setConfirmationSent(false)
-                setError(null)
-              } catch (e) {
-                console.warn('auto sign-in via webhook event failed', e)
-                // leave to manual check
-              }
-            })()
-          }
-        } catch (e) {
-          console.warn('event handling error', e)
-        }
-      })
-      .subscribe()
 
-    // fallback: polling every 4s (keeps previous behavior)
-    const iv = setInterval(async () => {
-      attempts += 1
-      try {
-        const { data, error } = await supabase
-          .from('users')
-          .select('email_confirmed_at')
-          .eq('email', email)
-          .single()
-        if (error) {
-          // stop polling if table is not accessible
-          console.warn('poll check error', error)
-          return
-        }
-        if (data?.email_confirmed_at) {
-          stopped = true
-          clearInterval(iv)
-          try {
-            await signIn(email, password)
-            setConfirmationSent(false)
-            setError(null)
-          } catch (e) {
-            console.warn('auto sign-in failed', e)
-          }
-        }
-        // stop after 30 attempts (~2 minutes)
-        if (attempts > 30 && !stopped) {
-          clearInterval(iv)
-          setError('Timed out waiting for email confirmation. Please check your inbox or click "I have confirmed".')
-        }
-      } catch (err) {
-        console.warn('polling error', err)
-      }
-    }, 4000)
 
-    return () => {
-      clearInterval(iv)
-      try { supabase.removeChannel(channel) } catch (e) { /* ignore */ }
-    }
-  }, [confirmationSent, email, password, signIn])
-
-  if (confirmationSent) {
-    return (
-      <div className="auth-card" role="region" aria-label="Confirm your email">
-        <h2>Confirm your email</h2>
-        <p className="help">We sent a confirmation message to <strong>{email}</strong>. Please click the confirmation link in that email to activate your account.</p>
-        <p className="help">This page will automatically continue once you confirm. You can also click the button below after confirming.</p>
-        <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span className="small">Waiting for confirmation...</span>
-          <span className="spinner" aria-hidden />
-        </div>
-
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-          <button
-            className="primary-btn"
-            onClick={async () => {
-              setLoading(true)
-              setError(null)
-              try {
-                // check confirmation on demand
-                const { data, error } = await supabase
-                  .from('users')
-                  .select('email_confirmed_at')
-                  .eq('email', email)
-                  .single()
-                if (error) throw error
-                if (data?.email_confirmed_at) {
-                  // auto sign-in after confirmation
-                  await signIn(email, password)
-                  setConfirmationSent(false)
-                  setError(null)
-                  setConfirmationSent(false)
-                  setError(null)
-                } else {
-                  setError('Email not confirmed yet. Please check your inbox.')
-                }
-              } catch (err: any) {
-                setError(err?.message || 'Failed to check confirmation')
-              } finally {
-                setLoading(false)
-              }
-            }}
-          >
-            {loading ? <span className="spinner" /> : 'I have confirmed'}
-          </button>
-
-          <button
-            className="alt-btn"
-            onClick={() => {
-              setConfirmationSent(false)
-            }}
-          >
-            Back
-          </button>
-        </div>
-
-        {error && <div className="error" role="alert" style={{ marginTop: 12 }}>{error}</div>}
-      </div>
-    )
-  }
 
   return (
     <div className="auth-card" role="region" aria-label="Authentication">
