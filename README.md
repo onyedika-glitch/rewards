@@ -36,17 +36,19 @@ Step-by-step (recommended):
        1. `001_create_daily_claims_and_claim_daily_points.sql` (adds daily_claims + claim RPC)
        2. `002_create_daily_claims_and_claim_daily_points.sql` (if present, our repo uses numbered migrations; run the ones present in `supabase/migrations/` in order)
        3. `003_create_rewards_and_redemptions_and_seed.sql` (creates `rewards`, `redemptions`, seeds the 8 rewards, and creates `redeem_reward` RPC)
-       4. (Optional) any subsequent migration files like `004_dedupe_rewards...sql` if provided
+       4. `004_create_user_events.sql` (creates `user_events` table used by the webhook flow)
+       5. (Optional) any subsequent migration files like `004_dedupe_rewards...sql` if provided
      - Verify the `rewards` table contains 8 seeded rows after running `003`.
 
    - Option B (Supabase CLI / local dev DB):
      - Install Supabase CLI and follow `supabase db` docs to apply migrations from `supabase/migrations/`.
-
 4. Configure environment variables locally:
    - Create a `.env` file at the project root with:
      ```bash
      VITE_SUPABASE_URL=your_supabase_project_url
      VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+     # Optional trial flag: when set to true, sign-ups auto-login immediately without waiting for email confirmation
+     VITE_AUTH_SKIP_CONFIRM=true
      ```
    - (Optional) For local testing of server-side RPCs, ensure the user session is authenticated when calling the frontend.
 
