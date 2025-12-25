@@ -11,8 +11,15 @@ const items = [
 ]
 
 const Sidebar: React.FC<{ active?: string }> = ({ active = 'rewards' }) => {
+  const [isMobile, setIsMobile] = React.useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 900 : false)
+  React.useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 900)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isMobile ? 'is-mobile' : ''}`}>
       <div className="brand">Flowwa</div>
       <nav>
         {items.map((it) => (

@@ -261,6 +261,9 @@ h2 { margin-top: 0; color: #333; font-size: 20px; margin-bottom: 8px; }
 @media (max-width:900px){
   .app-layout{ flex-direction:column; height:auto }
   .sidebar{ width:100%; display:flex; gap:12px; overflow:auto; position:relative; height:auto; padding:12px }
+  .sidebar.is-mobile{ overflow-x:auto; flex-wrap:nowrap }
+  .sidebar.is-mobile .nav-item{ flex:0 0 auto }
+  .sidebar.is-mobile .user-summary{ display:none }
   .main-content{ padding:12px }
   .rewards-page { padding: 0 }
 }

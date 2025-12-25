@@ -11,22 +11,45 @@
   </head>
   <body>
     <div id="root-placeholder" aria-hidden="true">
-      <div style="display:flex; height:100vh; background:#f8f9fa;">
-        <aside style="width:320px; background:#fff; padding:28px; box-shadow: 0 6px 18px rgba(11,15,25,0.06);">
-          <div style="height:40px; background:linear-gradient(90deg,#f3e8ff,#fff); border-radius:8px; width:140px;"></div>
-          <div style="height:12px; width:180px; background:#f3e8ff; border-radius:6px; margin-top:18px"></div>
+      <div class="placeholder-root">
+        <aside class="placeholder-aside">
+          <div class="ph-logo"></div>
+          <div class="ph-sub"></div>
           <div style="flex:1"></div>
-          <div style="height:48px; width:48px; border-radius:24px; background:#f3e8ff"></div>
+          <div class="ph-avatar"></div>
         </aside>
-        <main style="flex:1; padding:28px;">
-          <div style="height:44px; width:320px; background:#fff; border-radius:10px; margin-bottom:20px"></div>
-          <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:20px;">
-            <div style="height:220px; background:#fff; border-radius:12px"></div>
-            <div style="height:220px; background:#fff; border-radius:12px"></div>
-            <div style="height:220px; background:#fff; border-radius:12px"></div>
+        <main class="placeholder-main">
+          <div class="ph-topbar"></div>
+          <div class="ph-grid">
+            <div class="ph-card"></div>
+            <div class="ph-card"></div>
+            <div class="ph-card"></div>
           </div>
         </main>
       </div>
+
+      <style>
+      .placeholder-root{display:flex; gap:20px; height:100vh; background:#f8f9fa; align-items:stretch}
+      .placeholder-aside{min-width:220px; width:320px; background:#fff; padding:28px; box-shadow: 0 6px 18px rgba(11,15,25,0.06); border-radius:12px}
+      .ph-logo{height:40px; background:linear-gradient(90deg,#f3e8ff,#fff); border-radius:8px; width:140px}
+      .ph-sub{height:12px; width:180px; background:#f3e8ff; border-radius:6px; margin-top:18px}
+      .ph-avatar{height:48px; width:48px; border-radius:24px; background:#f3e8ff}
+      .placeholder-main{flex:1; padding:28px}
+      .ph-topbar{height:44px; width:320px; background:#fff; border-radius:10px; margin-bottom:20px}
+      .ph-grid{display:grid; grid-template-columns: repeat(3,1fr); gap:20px}
+      .ph-card{height:220px; background:#fff; border-radius:12px}
+
+      /* Responsive rules */
+      @media (max-width: 880px){
+        .placeholder-root{flex-direction:column; height:auto; padding:16px}
+        .placeholder-aside{width:100%; min-width:0}
+        .ph-grid{grid-template-columns: repeat(2,1fr)}
+      }
+      @media (max-width: 520px){
+        .ph-grid{grid-template-columns: 1fr}
+        .ph-topbar{width:100%}
+      }
+      </style>
     </div>
 
     <div id="root"></div>
