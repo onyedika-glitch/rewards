@@ -1,16 +1,93 @@
-# Flowvahub Rewards Page Recreation
+# Flowvahub Rewards Page — README
 
-This project recreates the Rewards page from Flowvahub.com using React and Supabase.
+This project implements a small Rewards experience using React + TypeScript and Supabase (Auth, Postgres, RPCs).
 
-## Features
+---
 
-- User authentication (sign up/sign in) via Supabase
-- Display user coin balance
-- List of available rewards for redemption
-- Redemption history
-- Proper loading and error states
+## ✅ Summary
 
-## Tech Stack
+- Frontend: React (TypeScript) + Vite
+- Backend / DB: Supabase (Postgres + Auth)
+- Tests: Vitest + Testing Library
+
+---
+
+## Prerequisites
+
+- Node 18+ and npm
+- Supabase account (https://app.supabase.com)
+- Optional: Supabase CLI for migration automation
+
+---
+
+## Quick start (recommended)
+
+1. Clone & install:
+
+```bash
+git clone <repo-url>
+cd rewards
+npm install
+```
+
+2. Create a Supabase project and copy **Project URL** and **anon/public key** (Settings → API).
+
+3. Apply DB migrations / seed data (choose one):
+
+- Quick: open Supabase **SQL Editor** and run the SQL files from `supabase/migrations/` in numeric order (the `003_...seed.sql` file seeds the default rewards).
+- CLI: install Supabase CLI and follow its docs to apply the migrations from `supabase/migrations/` (e.g. `supabase db push` or CLI migration commands depending on your CLI version).
+
+4. Add env vars in `.env` at project root:
+
+```env
+VITE_SUPABASE_URL=https://xyz.supabase.co
+VITE_SUPABASE_ANON_KEY=public-anon-key
+# Optional (dev): auto-login signups
+VITE_AUTH_SKIP_CONFIRM=true
+```
+
+5. Start dev server:
+
+```bash
+npm run dev
+# open http://localhost:5173
+```
+
+6. Verify:
+
+- Sign in using a Supabase user
+- Visit **Rewards Hub → Redeem Rewards** to see seeded items
+- Try claiming daily points and redeeming an item; verify tables (`daily_claims`, `redemptions`, `users.coins`)
+
+---
+
+## Commands
+
+- npm run dev — start dev server
+- npm test — run unit tests (vitest)
+- npm run lint — run eslint
+- npm run build — build for production
+
+---
+
+## Troubleshooting
+
+- TypeScript/Editor issues: restart the TS server (Command Palette → "TypeScript: Restart TS Server") and ensure you use Workspace TypeScript.
+- If the Redeem page shows no rewards: make sure migrations/seed ran successfully and `rewards` table contains rows.
+- For any horizontal overflow on mobile: use device emulator and inspect large elements; CSS contains defensive rules (max-width/overflow-x hidden) but layout edge-cases can still occur.
+
+---
+
+## Assumptions & trade-offs (short)
+
+- Data-first: UI displays only DB-seeded rewards (no static demos) — keeps single source of truth but requires migrations/seeds.
+- Lightweight styling: plain CSS + small components instead of a heavy UI framework to keep payload small — trade-off: more manual responsive fixes.
+- RPCs: `redeem_reward` and `claim_daily_points` are designed atomic and idempotent-friendly; in production you may prefer server-side restricted RPC invocation.
+- Migrations: include defensive checks (`IF NOT EXISTS`) and backfills to make re-running safe — trade-off: they are forgiving by design.
+
+---
+
+## Project structure (high level)
 
 - Frontend: React with TypeScript
 - Backend & Database: Supabase
