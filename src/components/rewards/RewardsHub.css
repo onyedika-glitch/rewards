@@ -129,9 +129,40 @@
 }
 
 .streak-card .streak-days{ font-size:1.75rem; font-weight:700; color:#7c3aed }
-.week-indicator{ display:flex; gap:0.5rem; margin:0.5rem 0 }
-.week-indicator .day{ width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:999px; background:#f3f4f6 }
+.week-indicator{ display:flex; gap:0.5rem; margin:0.5rem 0; flex-wrap:wrap; align-items:center }
+.week-indicator .day{ width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:999px; background:#f3f4f6; flex:0 0 auto }
 .week-indicator .day.active{ background:#c7b3ff; color:#4c1d95 }
+
+/* Make streak card friendly on small screens */
+@media (max-width:720px){
+  .streak-card{ padding:12px; min-height:auto }
+  .streak-card .card-body{ display:flex; flex-direction:column; gap:8px }
+  .streak-card .streak-days{ font-size:1.35rem; text-align:left }
+  .week-indicator{ gap:0.4rem }
+  .week-indicator .day{ width:28px; height:28px; font-size:0.9rem }
+  .streak-card .streak-note{ font-size:0.95rem }
+  .streak-card .btn{ width:100%; padding:0.7rem; font-size:0.95rem }
+}
+
+@media (max-width:480px){
+  .streak-card{ padding:10px }
+  .streak-card .streak-days{ font-size:1.15rem; font-weight:700 }
+  .week-indicator{ gap:0.35rem }
+  .week-indicator .day{ width:26px; height:26px; font-size:0.8rem }
+  .streak-card .streak-note{ font-size:0.9rem }
+  .streak-card .btn{ padding:0.8rem; font-size:0.96rem }
+}
+
+/* Tweak points card for small screens */
+@media (max-width:720px){
+  .points-card .points-number{ font-size:2rem }
+  .points-card{ padding:12px }
+  .points-card .card-header{ padding:0.6rem 0.8rem }
+}
+@media (max-width:480px){
+  .points-card .points-number{ font-size:1.6rem }
+}
+
 
 .offer-card{ display:flex; flex-direction:column; height:100% }
 .card-image{ height:140px; background:linear-gradient(90deg,#f3e8ff,#fef2f2); display:flex; align-items:center; justify-content:center; border-radius:8px; overflow:hidden }
@@ -256,7 +287,37 @@
 }
 
 @media (max-width:800px){
-  .cards-grid{ grid-template-columns: 1fr; }
+  /* Cards: one column, touch-friendly spacing */
+  .cards-grid{ grid-template-columns: 1fr; gap:1rem; padding:0 8px; justify-content:stretch }
+  .interactive-card{ flex: 1 1 100%; min-width:0; }
+  .interactive-card.right-col .card{ min-height: auto }
+  .card{ min-height: auto; padding:12px; border-radius:12px; transform: none; box-shadow: 0 8px 22px rgba(11,15,25,0.06) }
+  /* Always show CTAs on small screens and make them easier to tap */
+  .card .offer-actions{ transform:none !important; opacity:1 !important; pointer-events:auto !important; margin-top:12px }
+  .interactive-card:hover .offer-actions, .interactive-card:focus-within .offer-actions { transform:none; opacity:1; pointer-events:auto }
+  .btn{ padding:0.6rem 1rem; font-size:0.95rem }
+  .card .btn{ width:100%; display:inline-block }
+  .offer-thumb{ height:160px; object-fit:cover }
+  .cards-grid .card{ width:100% }
   .earn-list{ grid-template-columns: 1fr }
   .refer-stats{ flex-direction:column }
 }
+
+@media (max-width:480px){
+  /* Extra small screens: larger touch targets and condensed layout */
+  .cards-grid{ gap:0.75rem; padding:0 6px }
+  .offer-thumb{ height:140px }
+  .hub-title h1{ font-size:16px }
+  .hub-header .sub{ font-size:12px }
+  .card{ padding:10px }
+  .btn{ padding:0.7rem 0.9rem; font-size:0.95rem }
+  .card .btn{ width:100% }
+  .tabs .tab{ padding:6px 8px; font-size:13px }
+}
+
+/* Disable 3D interactions on touch devices to avoid layout jumps */
+@media (hover: none) and (pointer: coarse) {
+  .card, .interactive-card { transform: none !important }
+  .interactive-card:focus-within .card, .interactive-card:hover .card { box-shadow: 0 8px 22px rgba(11,15,25,0.06) }
+}
+

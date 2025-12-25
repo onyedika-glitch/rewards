@@ -27,6 +27,14 @@ const Auth: React.FC = () => {
 
   const { signUp, signIn } = useAuth()
 
+  // Track a lightweight responsive flag so we can adapt layout and test breakpoint behavior
+  const [isMobile, setIsMobile] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 720 : false)
+  React.useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 720)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   const emailError = useMemo(() => {
     if (!email) return null
     if (!emailRe.test(email)) return 'Please enter a valid email address'
@@ -84,7 +92,7 @@ const Auth: React.FC = () => {
 
 
   return (
-    <div className="auth-card" role="region" aria-label="Authentication">
+    <div className={`auth-card ${isMobile ? 'is-mobile' : ''}`} role="region" aria-label="Authentication">
       <h2>{isSignUp ? 'Create your account' : 'Welcome back'}</h2>
 
       <form onSubmit={handleSubmit} noValidate>

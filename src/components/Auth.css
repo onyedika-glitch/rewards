@@ -5,6 +5,16 @@
 label.field-label{font-size:0.85rem;color:var(--muted);font-weight:600}
 .input{height:44px;padding:10px 12px;border-radius:10px;border:1px solid #e8e8f0;background:#fff;outline:none;font-size:0.95rem}
 .input:focus{box-shadow:0 6px 18px rgba(124,58,237,0.06);border-color:var(--accent)}
+
+/* Mobile compact styling via class to make it testable */
+.auth-card.is-mobile{margin:18px;padding:16px;max-width:100%;border-radius:10px}
+.auth-card.is-mobile .input{height:44px;padding:10px}
+.auth-card.is-mobile .primary-btn{padding:10px;font-size:0.95rem}
+
+@media (max-width:480px){
+  .auth-card{margin:20px;padding:16px}
+}
+
 .row-with-button{display:flex;gap:8px;align-items:center}
 .show-btn{background:transparent;border:none;padding:6px;border-radius:8px;color:var(--accent);cursor:pointer}
 .help{font-size:0.83rem;color:#9ca3af}

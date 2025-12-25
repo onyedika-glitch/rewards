@@ -26,12 +26,40 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
+  const [isMobile, setIsMobile] = React.useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 900 : false)
+  const [sidebarOpen, setSidebarOpen] = React.useState<boolean>(() => (typeof window !== 'undefined' ? window.innerWidth > 900 : true))
+
+  React.useEffect(() => {
+    const onResize = () => {
+      const mobile = window.innerWidth <= 900
+      setIsMobile(mobile)
+      if (!mobile) setSidebarOpen(true)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  React.useEffect(() => {
+    // prevent background scroll when mobile sidebar is open
+    if (isMobile && sidebarOpen) document.body.classList.add('no-scroll')
+    else document.body.classList.remove('no-scroll')
+  }, [isMobile, sidebarOpen])
+
   return (
     <div className={user ? 'app rewards' : 'app auth'}>
       {user ? (
         <div className="app-layout">
-          <Sidebar />
+          <Sidebar isMobile={isMobile} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+          {/* mobile overlay */}
+          {isMobile && sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+
           <main className="main-content">
+            {/* hamburger button for small screens */}
+            <button className="hamburger-btn" aria-label="Open menu" onClick={() => setSidebarOpen(true)}>
+              ☰
+            </button>
+
             {page === 'rewards' && <RewardsPage />}
             {page === 'redeem' && <RedeemPage />}
           </main>
