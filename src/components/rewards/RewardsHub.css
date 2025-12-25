@@ -313,7 +313,14 @@
   .btn{ padding:0.7rem 0.9rem; font-size:0.95rem }
   .card .btn{ width:100% }
   .tabs .tab{ padding:6px 8px; font-size:13px }
+  /* cap toasts and other minimal widths to avoid overflow in very small devices */
+  .toast { min-width: 160px }
+  .toast-viewport { left: 8px; right: 8px; }
+  .rewards-hub, .rewards-page { padding-left: 6px; padding-right: 6px }
 }
+/* Additional defensive rules to prevent any wide child from forcing horizontal scroll */
+.cards-grid, .cards-grid > .interactive-card, .card, .redeem-grid, .redeem-card { max-width: 100%; box-sizing: border-box }
+@media (hover: none) and (pointer: coarse) { .cards-grid { gap: 12px } }
 
 /* Disable 3D interactions on touch devices to avoid layout jumps */
 @media (hover: none) and (pointer: coarse) {

@@ -57,7 +57,7 @@ const AppContent: React.FC = () => {
           <main className="main-content">
             {/* hamburger button for small screens */}
             <button className="hamburger-btn" aria-label="Open menu" onClick={() => setSidebarOpen(true)}>
-              ☰
+              Menu
             </button>
 
             {page === 'rewards' && <RewardsPage />}

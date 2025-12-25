@@ -5,8 +5,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow-x: hidden; /* make sure page never scrolls horizontally */
+  max-width: 100vw;
 }
+html { max-width: 100vw; overflow-x: hidden; }
+/* Ensure containers cannot accidentally overflow the viewport */
+.app-layout, .main-content, .rewards-page { overflow-x: hidden; max-width: 100% }
+/* Allow flex children to shrink rather than cause overflow */
+* { min-width: 0; }
 
 *,
 *::before,
